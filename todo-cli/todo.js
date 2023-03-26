@@ -1,27 +1,29 @@
+/* eslint-disable no-undef */
 const todoList = () => {
-  all = []
+  all = [];
   const add = (todoItem) => {
-    all.push(todoItem)
-  }
+    all.push(todoItem);
+  };
   const markAsComplete = (index) => {
-    all[index].completed = true
-  }
+    all[index].completed = true;
+  };
 
   const overdue = () => {
     // Write the date check condition here and return the array
     // of overdue items accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] < 24;
+      return item.dueDate.split("-")[2] < new Date().toISOString().slice(8, 10);
     });
     return arr;
-    };
-  
+  };
 
   const dueToday = () => {
     // Write the date check condition here and return the array
     // of todo items that are due today accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] == 24;
+      return (
+        item.dueDate.split("-")[2] == new Date().toISOString().slice(8, 10)
+      );
     });
     return arr;
   };
@@ -30,7 +32,7 @@ const todoList = () => {
     // Write the date check condition here and return the array
     // of todo items that are due later accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] > 24;
+      return item.dueDate.split("-")[2] > new Date().toISOString().slice(8, 10);
     });
     return arr;
   };
@@ -41,7 +43,7 @@ const todoList = () => {
     const arr = list.map((item) => {
       let x = " ";
       if (item.completed) x = "x";
-      if (item.dueDate.split("-")[2] == 24) {
+      if (item.dueDate.split("-")[2] == new Date().toISOString().slice(8, 10)) {
         return `[${x}] ${item.title}`;
       }
       return `[${x}] ${item.title} ${item.dueDate}`;
@@ -56,11 +58,10 @@ const todoList = () => {
     overdue,
     dueToday,
     dueLater,
-    toDisplayableList
+    toDisplayableList,
   };
 };
-module.exports= todoList;
+module.exports = todoList;
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
 // ####################################### #
-
