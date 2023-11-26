@@ -35,6 +35,3 @@ http.createServer(
         }
     }
 ).listen(args.port);
-// server.listen(args.p, (err) => {
-//     if(err) console.log("error in server setup");
-// });
