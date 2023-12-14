@@ -27,7 +27,13 @@ const todoList = () => {
   const toDisplayableList = (list) => {
     return list.map((todo) => {
       const checkbox = todo.completed ? '[x]' : '[ ]';
-      return `${checkbox} ${todo.title} - Due: ${formattedDate(new Date(todo.dueDate))}`;
+      return `${checkbox} ${todo.title} ${formattedDate(new Date(todo.dueDate))}`;
+    }).join("\n");
+  };
+  const toDisplayableListduetoday = (list) => {
+    return list.map((todo) => {
+      const checkbox = todo.completed ? '[x]' : '[ ]';
+      return `${checkbox} ${todo.title}`;
     }).join("\n");
   };
 
@@ -46,7 +52,7 @@ const todoList = () => {
     overdue,
     dueToday,
     dueLater,
-    toDisplayableList,
+    toDisplayableList,toDisplayableListduetoday,
   };
 };
 
@@ -82,7 +88,7 @@ console.log("\n")
 
 console.log("Due Today")
 let itemsDueToday = todos.dueToday()
-let formattedItemsDueToday = todos.toDisplayableList(itemsDueToday)
+let formattedItemsDueToday = todos.toDisplayableListduetoday(itemsDueToday)
 console.log(formattedItemsDueToday)
 console.log("\n")
 
