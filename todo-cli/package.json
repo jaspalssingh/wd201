@@ -1,0 +1,20 @@
+{
+  "name": "todo-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "todo.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jaspal <jaspal@example.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write ."
+    ]
+  }
+}
