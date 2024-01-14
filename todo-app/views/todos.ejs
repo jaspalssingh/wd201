@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>DueDate</th>
+                <th>Completion Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0 ;i < allTodos.length;i++) { %>
+                <tr>
+                    <td><%= allTodos[i].id %></td>
+                    <td><%= allTodos[i].title %></td>
+                    <td><%= allTodos[i].dueDate %></td>
+                    <td><%= allTodos[i].completed %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
