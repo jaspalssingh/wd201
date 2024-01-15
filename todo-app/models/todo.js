@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 "use strict";
+const { Op } = require("sequelize");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -16,6 +17,37 @@ module.exports = (sequelize, DataTypes) => {
     }
     static getTodos(){
       return this.findAll();
+    }
+    static getOverdueTodos() {
+      const { Op } = require("sequelize");
+      return this.findAll({
+        where: {
+          dueDate: {
+            [Op.lt]: new Date().toISOString().slice(0, 10),
+          },
+          completed: false,
+        },
+      });
+    }
+    static getDueTodayTodos() {
+      const { Op } = require("sequelize");
+      return this.findAll({
+        where: {
+          dueDate:new Date().toISOString().slice(0, 10),        
+          completed: false,
+        },
+      });
+    }
+    static getdueLaterTodos() {
+      const { Op } = require("sequelize");
+      return this.findAll({
+        where: {
+          dueDate: {
+            [Op.gt]: new Date().toISOString().slice(0, 10),
+          },
+          completed: false,
+        },
+      });
     }
     markAsCompleted() {
       return this.update({ completed: true });

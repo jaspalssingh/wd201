@@ -9,13 +9,22 @@ app.set("view engine","ejs");
 
 app.get("/", async (request, response)=>{
   const allTodos = await Todo.getTodos();
+  const dueToday = await Todo.getDueTodayTodos();
+  const overDue = await Todo.getOverdueTodos();
+  const dueLater = await Todo.getdueLaterTodos();
   if(request.accepts("html")){
     response.render('index',{
-      allTodos
+      allTodos,
+      dueToday,
+      dueLater,
+      overDue
     });
   }else{
     response.json({ 
-      allTodos
+      allTodos,
+      dueToday,
+      dueLater,
+      overDue
     })
   }
 });
