@@ -71,10 +71,12 @@
                     </div>
                 </form>
                 <div>
-                    <%- include('todo.ejs', {title: "Overdue" , data: overDue}) %>
-                        <%- include('todo.ejs', {title: "Due Today" , data: dueToday}) %>
-                            <%- include('todo.ejs', {title: "Due Later" , data: dueLater}) %>
-                                <%- include('todo.ejs', {title: "Completed Items" , data: completedTodos}) %>
+                    <%- include('todo.ejs', {id:"count-overdue",title: "Overdue" , data: overDue}) %>
+                        <%- include('todo.ejs', {id:"count-due-today",title: "Due Today" , data: dueToday}) %>
+                            <%- include('todo.ejs', {id:"count-due-later",title: "Due Later" , data: dueLater}) %>
+                                <%- include('todo.ejs', {id:"count-completed",title:"Completed Items" ,
+                                    data:completedTodos}) %>
+
                 </div>
         </div>
     </div>
