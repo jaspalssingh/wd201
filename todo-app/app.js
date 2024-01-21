@@ -17,12 +17,14 @@ app.get("/", async (request, response)=>{
   const dueToday = await Todo.getDueTodayTodos();
   const overDue = await Todo.getOverdueTodos();
   const dueLater = await Todo.getdueLaterTodos();
+  const completedTodos = await Todo.getCompletedTodos();
   if(request.accepts("html")){
     response.render('index',{
       allTodos,
       dueToday,
       dueLater,
       overDue,
+      completedTodos,
       csrfToken:request.csrfToken()
     });
   }else{
@@ -30,39 +32,38 @@ app.get("/", async (request, response)=>{
       allTodos,
       dueToday,
       dueLater,
-      overDue
+      overDue,
+      completedTodos
     })
   }
 });
 app.use(express.static(path.join(__dirname,'public')))
-app.get("/", function (request, response) {
-  response.send("Hello World");
-});
 
-app.get("/todos", async function (_request, response) {
-  console.log("Processing list of all Todos ...");
-  // FILL IN YOUR CODE HERE
-  try {
-    const todo = await Todo.findAll();
-    return response.json(todo);
-  } catch (e) {
-    console.log(e);
-    return response.status(422).json(e);
-  }
+
+// app.get("/todos", async function (request, response) {
+//   console.log("Processing list of all Todos ...");
+//   // FILL IN YOUR CODE HERE
+//   try {
+//     const todo = await Todo.findAll();
+//     return response.json(todo);
+//   } catch (e) {
+//     console.log(e);
+//     return response.status(422).json(e);
+//   }
   // First, we have to query our PostgerSQL database using Sequelize to get list of all Todos.
   // Then, we have to respond with all Todos, like:
   // response.send(todos)
-});
+// });
 
-app.get("/todos/:id", async function (request, response) {
-  try {
-    const todo = await Todo.findByPk(request.params.id);
-    return response.json(todo);
-  } catch (error) {
-    console.log(error);
-    return response.status(422).json(error);
-  }
-});
+// app.get("/todos/:id", async function (request, response) {
+//   try {
+//     const todo = await Todo.findByPk(request.params.id);
+//     return response.json(todo);
+//   } catch (error) {
+//     console.log(error);
+//     return response.status(422).json(error);
+//   }
+// });
 
 app.post("/todos", async function (request, response) {
   try {
@@ -74,16 +75,24 @@ app.post("/todos", async function (request, response) {
   }
 });
 
-app.put("/todos/:id/markAsCompleted", async function (request, response) {
-  const todo = await Todo.findByPk(request.params.id);
-  try {
-    const updatedTodo = await todo.markAsCompleted();
-    return response.json(updatedTodo);
-  } catch (error) {
-    console.log(error);
-    return response.status(422).json(error);
+app.put(
+  "/todos/:id",
+  async function (request, response) {
+    try {
+      const todo = await Todo.findOne({
+        where: {id: request.params.id },
+      });
+      const updatedTodo = await todo.setCompletionStatus(
+        request.body.completed
+      );
+      return response.json(updatedTodo);
+    } catch (error) {
+      console.log(error);
+      return response.status(422).json(error);
+    }
   }
-});
+);
+
 
 app.delete("/todos/:id", async function (request, response) {
   console.log("Delete a todo by ID: ", request.params.id);

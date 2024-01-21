@@ -56,9 +56,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
-    markAsCompleted() {
-      return this.update({ completed: true });
+    static getCompletedTodos() {
+      return this.findAll({
+        where: {
+          completed: true,
+        },
+      });
     }
+    setCompletionStatus(status) {
+      return this.update({ completed: !status });
+    }
+    
   }
   Todo.init(
     {
