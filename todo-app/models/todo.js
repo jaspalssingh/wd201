@@ -10,22 +10,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Todo.belongsTo(models.User,{
+        foreignKey:'userId'
+      })
       // define association here
     }
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({ title: title, dueDate: dueDate, completed: false,userId });
     }
     static getTodos(){
       return this.findAll();
     }
-    static async remove(id){
+    static async remove(id,userId){
       return this.destroy({
         where:{
           id,
+          userId
         },
       });
     }
-    static getOverdueTodos() {
+    static getOverdueTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
@@ -33,19 +37,21 @@ module.exports = (sequelize, DataTypes) => {
             [Op.lt]: new Date().toISOString().slice(0, 10),
           },
           completed: false,
+          userId,
         },
       });
     }
-    static getDueTodayTodos() {
+    static getDueTodayTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
           dueDate:new Date().toISOString().slice(0, 10),        
           completed: false,
+          userId,
         },
       });
     }
-    static getdueLaterTodos() {
+    static getdueLaterTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
@@ -53,13 +59,15 @@ module.exports = (sequelize, DataTypes) => {
             [Op.gt]: new Date().toISOString().slice(0, 10),
           },
           completed: false,
+          userId,
         },
       });
     }
-    static getCompletedTodos() {
+    static getCompletedTodos(userId) {
       return this.findAll({
         where: {
           completed: true,
+          userId,
         },
       });
     }

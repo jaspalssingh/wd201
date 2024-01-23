@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo-Manager</title>
+    <title>
+        <%= title%>
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="csrf-token" content="<%= csrfToken %>">
     <link href="./css/styles.css" rel="stylesheet">
@@ -51,39 +53,12 @@
     <div class="grid grid-cols-6">
         <div class="col-start-3 col-span-2">
             <%- include('header.ejs') %>
-                <form action="/todos" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                    <div class="flex gap-2 py-4">
-                        <div class="flex-auto">
-                            <input type="text" name="title"
-                                class="border border-gray-300 p-2 text-sm rounded text-gray-900 w-full"
-                                placeholder="What's next?" required />
-                        </div>
-                        <div class="flex-auto">
-                            <input type="date" name="dueDate"
-                                class="border border-gray-300 p-2 text-sm rounded leading-4 text-gray-900 w-full"
-                                required />
-                        </div>
-                        <div class="flex-none">
-                            <button type="submit"
-                                class="bg-green-600 font-medium mr-2 mb-2 text-white px-5 py-1.5 rounded">Add</button>
-                        </div>
-                    </div>
-                </form>
-                <div>
-                    <%- include('todo.ejs', {id:"count-overdue",title: "Overdue" , data: overDue}) %>
-                        <%- include('todo.ejs', {id:"count-due-today",title: "Due Today" , data: dueToday}) %>
-                            <%- include('todo.ejs', {id:"count-due-later",title: "Due Later" , data: dueLater}) %>
-                                <%- include('todo.ejs', {id:"count-completed",title:"Completed Items" ,
-                                    data:completedTodos}) %>
+                <p class="py-2">Welcome to the To-Do manager</p>
+                <p class="py-2">New Here? <a href="/signup" class="text-green-600">Sign-up now</a></p>
+                <p class="py-2">Alread have an account? <a href="/login" class="text-green-600">Sign-in</a></p>
 
-                </div>
         </div>
     </div>
-
-    <!-- <h3>Todo List:</h3> -->
-    <!-- <%- include('todos.ejs') %>
-    <%- include('footer.ejs') %> -->
 </body>
 
 </html>
